@@ -5,13 +5,20 @@ def encode(phrase):
         output += str(new_value)
     return output
 
-def decode(phrase):
-    output = ''
-    for i in phrse:
-        new_value = ((int(i)+10)-3) % 10
-
-        output += str(new_value)
-    return output
+def decode(code):
+    digits = [int(d) for d in str(code)]
+    for i in range(len(digits)):
+        digits[i] -= 3
+        if digits[i] == 0:
+            digits[i] = 10
+            continue
+        if digits[i] == -1:
+            digits[i] = 11
+            continue
+        if digits[i] == -2:
+            digits[i] = 12
+            continue
+    return int("".join(map(str, digits)))
 
 while True:
     print('Menu')
@@ -29,9 +36,10 @@ while True:
         print("Your password has been encoded and stored!")
 
     elif option ==2:
-
-            print(f"The encoded password is {encoded_password}, and the original password is {decode_password(encoded_password)}.")
-
+        code = encoded_password
+        decoded_password = decode(code)
+        print(f"The encoded password is {encoded_password}", end="")
+        print(f", and the original password is {decoded_password}\n")
     elif option ==3:
         break
 
